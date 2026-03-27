@@ -2,12 +2,12 @@ import { inject } from "@angular/core";
 import { CanMatchFn, Router } from "@angular/router";
 import { SessionService } from "./session.service";
 
-export const AUTH_GUARD: CanMatchFn = () => {
+export const GUEST_GUARD: CanMatchFn = () => {
   const sessionService = inject(SessionService);
   const router = inject(Router);
 
-  if (!sessionService.isLogged)
-    return router.createUrlTree(['/login']);
+  if (sessionService.isLogged)
+    return router.createUrlTree(['/']);
 
   return true;
 }
