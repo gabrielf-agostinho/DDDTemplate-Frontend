@@ -16,6 +16,10 @@ export class LoginPage {
     private _router: Router
   ) { }
 
+  public get currentYear(): number {
+    return new Date().getFullYear();
+  }
+
   public onSubmit(dto: LoginDTO): void {
     this._loginService.login(dto)?.pipe(first()).subscribe({
       next: () => this._router.navigate(['/']),

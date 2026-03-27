@@ -11,7 +11,7 @@ export class LoginService {
 
   public login(dto: LoginDTO): Observable<UserToken> | null {
     if (dto.email && dto.password)
-      return this._authService.auth(dto.email, dto.password)
+      return this._authService.auth(dto.email, dto.password);
 
     return null;
   };
