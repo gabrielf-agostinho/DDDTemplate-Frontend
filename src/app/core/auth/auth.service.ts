@@ -15,15 +15,17 @@ export class AuthService {
     private _sessionService: SessionService
   ) { }
 
+  private readonly apiVersion: string = 'v1'
+
   public auth(email: string, password: string): Observable<UserToken> {
-    return this._httpService.post<UserToken>('auth', { email, password })
+    return this._httpService.post<UserToken>(`${this.apiVersion}/auth`, { email, password })
       .pipe(
         tap(token => this._sessionService.setSession(token))
       );
   }
 
   public register(name: string, email: string, password: string): Observable<void> {
-    return this._httpService.post<void>('auth/register', { name, email, password });
+    return this._httpService.post<void>(`${this.apiVersion}/auth/register`, { name, email, password });
   }
 
   public refresh(refreshToken: string): Observable<UserToken> {
@@ -31,18 +33,18 @@ export class AuthService {
       headers: new HttpHeaders({ 'refreshToken': refreshToken })
     };
 
-    return this._httpService.post<UserToken>('auth/refresh', null, options)
+    return this._httpService.post<UserToken>(`${this.apiVersion}auth/refresh`, null, options)
       .pipe(
         tap(token => this._sessionService.setSession(token))
       );
   }
 
   public currentUser<T>() {
-    return this._httpService.get<T>('auth/current-user');
+    return this._httpService.get<T>(`${this.apiVersion}/auth/current-user`);
   }
 
   public passwordReset(oldPassword: string, newPassword: string) {
-    return this._httpService.patch('auth/password-reset', { oldPassword, newPassword });
+    return this._httpService.patch(`${this.apiVersion}/auth/password-reset`, { oldPassword, newPassword });
   }
 
   public logout(): void {

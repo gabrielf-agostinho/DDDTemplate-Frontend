@@ -13,18 +13,25 @@ export class ErrorHandlerService {
 
   public handle(error: Response<unknown> | HttpErrorResponse): Observable<never> {
 
-    const isBackendResponse = (err: any): err is Response<unknown> => err && typeof err.success === 'boolean' && 'code' in err;
-
     if (!navigator.onLine) {
       this._toastService.showErrorToast('Você está sem conexão com a internet.');
       return throwError(() => error);
     }
 
-    if (isBackendResponse(error)) {
-      if (error.success === false && error.code)
-        this.showToastByCode(error);
+    if (error instanceof HttpErrorResponse) {
+      const backendError = error.error;
+
+      if (backendError?.success === false) {
+        this.showToastByCode(backendError);
+        return throwError(() => backendError);
+      }
+
+      this._toastService.showErrorToast('Erro de comunicação com o servidor.');
       return throwError(() => error);
     }
+
+    if (error.success === false)
+      this.showToastByCode(error);
 
     this._toastService.showErrorToast('Ocorreu um erro inesperado.');
     return throwError(() => error);
