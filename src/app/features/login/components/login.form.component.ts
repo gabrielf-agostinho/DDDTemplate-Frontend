@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, inject, Input, Output } from "@angular/core";
 import { FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { IftaLabelModule } from 'primeng/iftalabel';
@@ -7,6 +7,7 @@ import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { LoginDTO } from "../models/login.dto";
 import { LoginForm } from "../models/login.form";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-login-form',
@@ -18,10 +19,12 @@ import { LoginForm } from "../models/login.form";
     IftaLabelModule,
     InputTextModule,
     PasswordModule,
-    ButtonModule
-],
+    ButtonModule,
+  ],
 })
 export class LoginFormComponent {
+  private _router: Router = inject(Router);
+
   public formFields = LoginForm.formFields;
   public emailField = this.formFields.email;
   public passwordField = this.formFields.password;
@@ -36,5 +39,9 @@ export class LoginFormComponent {
 
   public submit(): void {
     this.submitForm.emit(this.formGroup.getRawValue() as LoginDTO);
+  }
+
+  public gotoRegister(): void {
+    this._router.navigate(['/register']);
   }
 }

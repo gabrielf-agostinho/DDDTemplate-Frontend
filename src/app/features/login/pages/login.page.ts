@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { LoginService } from "../services/login.service";
 import { first } from "rxjs";
 import { LoginFormComponent } from "../components/login.form.component";
+import { DateUtils } from "../../../shared/utils/date.utils";
 
 @Component({
   standalone: true,
@@ -12,6 +13,7 @@ import { LoginFormComponent } from "../components/login.form.component";
 })
 export class LoginPage {
   constructor(
+    public dateUtils: DateUtils,
     private _loginService: LoginService,
     private _router: Router
   ) { }

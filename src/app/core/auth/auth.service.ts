@@ -22,6 +22,10 @@ export class AuthService {
       );
   }
 
+  public register(name: string, email: string, password: string): Observable<void> {
+    return this._httpService.post<void>('auth/register', { name, email, password });
+  }
+
   public refresh(refreshToken: string): Observable<UserToken> {
     const options: ApiRequestOptions = {
       headers: new HttpHeaders({ 'refreshToken': refreshToken })

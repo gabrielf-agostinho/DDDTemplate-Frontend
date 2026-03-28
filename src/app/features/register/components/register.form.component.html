@@ -1,0 +1,41 @@
+<form [formGroup]="formGroup" (ngSubmit)="submit()" class="flex flex-col gap-5">
+  <!-- Nome -->
+  <div class="flex flex-col gap-1">
+    <p-iftalabel>
+      <input [id]="nameField.id" pInputText class="w-full" formControlName="name" autocomplete="off" />
+      <label [for]="nameField.id">{{ nameField.label }}</label>
+    </p-iftalabel>
+  </div>
+
+  <!-- Email -->
+  <div class="flex flex-col gap-1">
+    <p-iftalabel>
+      <input [id]="emailField.id" pInputText class="w-full" formControlName="email" autocomplete="off" />
+      <label [for]="emailField.id">{{ emailField.label }}</label>
+    </p-iftalabel>
+  </div>
+
+  <!-- Password -->
+  <div class="flex flex-col gap-1">
+    <p-iftalabel>
+      <p-password [id]="passwordField.id" [toggleMask]="true" [feedback]="true" fluid formControlName="password"
+        autocomplete="off" />
+      <label [for]="passwordField.id">{{ passwordField.label }}</label>
+    </p-iftalabel>
+  </div>
+
+  <!-- Password confirmation -->
+  <div class="flex flex-col gap-1">
+    <p-iftalabel>
+      <p-password id="passwordConfirmation" [toggleMask]="true" [feedback]="false" fluid
+        [(ngModel)]="passwordConfirmation" [ngModelOptions]="{ standalone: true }" autocomplete="off" />
+      <label for="passwordConfirmation">Confirme sua senha</label>
+    </p-iftalabel>
+  </div>
+
+  <!-- Botões -->
+  <div class="flex flex-col gap-3 mt-2">
+    <button pButton type="submit" label="Cadastrar" class="w-full" [disabled]="shouldDisable()"></button>
+    <button pButton type="button" label="Voltar" class="w-full p-button-outlined" (click)="gotoLogin()"></button>
+  </div>
+</form>

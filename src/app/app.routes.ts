@@ -7,4 +7,9 @@ export const routes: Routes = [
     canMatch: [GUEST_GUARD],
     loadChildren: () => import('./features/login/login.routes').then(m => m.LOGIN_ROUTES)
   },
+  {
+    path: 'register',
+    canMatch: [GUEST_GUARD],
+    loadChildren: () => import('./features/register/register.routes').then(m => m.REGISTER_ROUTES)
+  }
 ];

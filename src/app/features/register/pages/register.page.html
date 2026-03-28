@@ -13,11 +13,11 @@
       </div>
       <div class="flex flex-col items-center gap-2 w-full">
         <div class="text-surface-900 dark:text-surface-0 text-2xl font-semibold leading-tight text-center w-full">
-          Bem-vindo(a)
+          Cadastre-se
         </div>
       </div>
     </div>
-    <app-login-form (submitForm)="onSubmit($event)"></app-login-form>
+    <app-register-form (submitForm)="onSubmit($event)"></app-register-form>
   </div>
   <small class="absolute bottom-4 text-center w-full text-surface-600 dark:text-surface-400">©{{ dateUtils.currentYear }}</small>
 </div>

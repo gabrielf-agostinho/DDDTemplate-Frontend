@@ -1,13 +1,23 @@
 import { Validators } from "@angular/forms";
 import { FormModel } from "../../../shared/forms/form.model";
 import { FormFieldsOf } from "../../../shared/forms/FormFieldsOf.type";
-import { LoginDTO } from "./login.dto";
+import { UserPostDTO } from "../../../shared/models/DTOs/users/user.dto";
 
-export class LoginForm extends FormModel<LoginDTO> {
+export class RegisterForm extends FormModel<UserPostDTO> {
+  public name: string | undefined;
   public email: string | undefined;
   public password: string | undefined;
 
-  public static formFields: FormFieldsOf<LoginDTO> = {
+  public static formFields: FormFieldsOf<UserPostDTO> = {
+    isActive: {
+      id: 'isActive'
+    },
+    name: {
+      id: 'name',
+      label: 'Nome',
+      placeholder: 'Nome',
+      validators: [Validators.required]
+    },
     email: {
       id: 'email',
       label: 'Email',
@@ -22,5 +32,5 @@ export class LoginForm extends FormModel<LoginDTO> {
     }
   };
 
-  protected override formFields = LoginForm.formFields;
+  protected override formFields = RegisterForm.formFields;
 }

@@ -28,6 +28,6 @@
   <!-- Botões -->
   <div class="flex flex-col gap-3 mt-2">
     <button pButton type="submit" label="Entrar" class="w-full" [disabled]="formGroup.invalid"></button>
-    <button pButton type="button" label="Criar conta" class="w-full p-button-outlined"></button>
+    <button pButton type="button" label="Criar conta" class="w-full p-button-outlined" (click)="gotoRegister()"></button>
   </div>
 </form>
