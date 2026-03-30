@@ -84,6 +84,9 @@ export const PRIMENG_CONFIG: PrimeNGConfigType = {
     emptyFilterMessage: 'Nenhum resultado encontrado',
   },
   theme: {
-    preset: Aura
+    preset: Aura,
+    options: {
+      darkModeSelector: '.app-dark',
+    },
   }
 };

@@ -1,0 +1,15 @@
+:host::ng-deep {
+  .menu {
+    &.p-panelmenu {
+      transition: width 0.5s ease-out;
+
+      .p-panelmenu-panel:has(.p-panelmenu-header-active) {
+        margin: 0;
+
+        .p-panelmenu-item-link-active>* {
+          color: color-mix(in srgb, var(--p-primary-color) calc(100% * var(--tw-text-opacity, 1)), transparent);
+        }
+      }
+    }
+  }
+}

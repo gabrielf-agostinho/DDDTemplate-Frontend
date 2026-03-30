@@ -11,5 +11,12 @@ export const routes: Routes = [
     path: 'register',
     canMatch: [GUEST_GUARD],
     loadChildren: () => import('./features/register/register.routes').then(m => m.REGISTER_ROUTES)
+  },
+  {
+    path: '',
+    loadComponent: () => import('./layout/base-layout.component').then(m => m.BaseLayoutComponent),
+    children: [
+      
+    ]
   }
 ];

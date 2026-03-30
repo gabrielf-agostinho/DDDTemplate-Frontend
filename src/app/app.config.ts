@@ -10,6 +10,8 @@ import { provideCurrency } from './core/providers/currency.provider';
 import { configLocale } from './core/config/locale.config';
 import { provideHttpCLient } from './core/providers/httpClient.provider';
 import { provideMessageService } from './core/providers/messageService.provider';
+import { provideSystemInfo } from './core/providers/systemInfo.provider';
+import { provideConfirmationService } from './core/providers/confirmationService.provider';
 
 configLocale();
 
@@ -22,6 +24,8 @@ export const appConfig: ApplicationConfig = {
     provideLocale(),
     provideCurrency(),
     providePrimeNG(PRIMENG_CONFIG),
-    provideMessageService()
+    provideMessageService(),
+    provideConfirmationService(),
+    provideSystemInfo()
   ]
 };

@@ -1,0 +1,37 @@
+<div class="relative flex w-full h-12">
+  <div class="flex-1">
+    <p-button icon="pi pi-bars" [text]="true" [rounded]="true" tooltipPosition="left" pTooltip="Exibir menu"
+      (onClick)="onToggleMenu()"></p-button>
+  </div>
+
+  <div class="flex-1 justify-center hidden md:flex">
+    <a class="flex justify-center items-center whitespace-nowrap" [routerLink]="['/']">
+      <img class="max-w-28 text-primary" [src]="themeService.isDarkMode() ? '' : '' " alt="Logo" />
+      <h1 class="text-primary ms-2 mr-10">
+        | {{ systemInfo.name }}
+      </h1>
+    </a>
+  </div>
+
+  <div class="flex flex-1" [class]="
+      direction === 'down'
+        ? 'flex-row justify-end'
+        : 'flex-row-reverse justify-start'
+    ">
+
+    <app-theme-switcher></app-theme-switcher>
+
+    <p-speeddial class="topbar-speeddial" [model]="userOptions" [direction]="direction">
+      <ng-template #button let-toggleCallback="toggleCallback">
+        <p-button icon="pi pi-user" [text]="true" [rounded]="true" tooltipPosition="left"
+          [pTooltip]="currentUser ? currentUser.name : 'Usuário'" (onClick)="toggleCallback($event)"></p-button>
+      </ng-template>
+      <ng-template #item let-item let-toggleCallback="toggleCallback">
+        <p-button [icon]="item.icon" [text]="true" [rounded]="true" [pTooltip]="item.label"
+          (onClick)="toggleCallback($event, item)"></p-button>
+      </ng-template>
+    </p-speeddial>
+  </div>
+</div>
+
+<p-confirmDialog></p-confirmDialog>

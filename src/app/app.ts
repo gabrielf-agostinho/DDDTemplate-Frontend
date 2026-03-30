@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ToastModule } from 'primeng/toast';
 import { RouterOutlet } from '@angular/router';
+import { ThemeService } from './layout/services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -13,4 +14,10 @@ import { RouterOutlet } from '@angular/router';
     <router-outlet></router-outlet>
   `
 })
-export class App { }
+export class App {
+  constructor(private _themeService: ThemeService) {
+    _themeService.setTheme(
+      (_themeService.getCurrentTheme() as 'dark') || 'light'
+    );
+  }
+}
