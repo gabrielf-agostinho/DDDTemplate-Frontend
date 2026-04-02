@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
-import { HttpService } from "./http.service";
+import { HttpService } from "../../core/api/http.service";
 import { Observable } from "rxjs";
-import { Pagination } from "../models/Pagination.model";
+import { Pagination } from "../../core/models/Pagination.model";
 import { KeyValue } from "@angular/common";
-import { buildQueryParams } from "./query-builder";
+import { buildQueryParams } from "../../core/api/query-builder";
 
 @Injectable()
-export abstract class BaseService<T> {
+export abstract class BaseService<TGetDTO, TPostDTO, TPutDTO> {
   protected abstract module: string;
 
   constructor(
@@ -16,7 +16,7 @@ export abstract class BaseService<T> {
     queryParams: KeyValue<string, unknown>[] = [],
     skip?: number,
     take?: number
-  ): Observable<Pagination<T>> {
+  ): Observable<Pagination<TGetDTO>> {
     const params = [...queryParams];
 
     params.push({ key: 'skip', value: skip });
@@ -24,22 +24,22 @@ export abstract class BaseService<T> {
 
     const query = buildQueryParams(params);
 
-    return this.http.get<Pagination<T>>(`${this.module}/${query}`)
+    return this.http.get<Pagination<TGetDTO>>(`${this.module}/${query}`)
   }
 
-  public getAll(): Observable<T[]> {
-    return this.http.get<T[]>(`${this.module}`)
+  public getAll(): Observable<TGetDTO[]> {
+    return this.http.get<TGetDTO[]>(`${this.module}`)
   }
 
-  public getById(id: string): Observable<T> {
-    return this.http.get<T>(`${this.module}/${id}`)
+  public getById(id: string): Observable<TGetDTO> {
+    return this.http.get<TGetDTO>(`${this.module}/${id}`)
   }
 
-  public post(dto: T): Observable<{ id: string }> {
+  public post(dto: TPostDTO): Observable<{ id: string }> {
     return this.http.post<{ id: string }>(`${this.module}`, dto)
   }
 
-  public put(dto: T, id: string): Observable<void> {
+  public put(dto: TPutDTO, id: string): Observable<void> {
     return this.http.put<void>(`${this.module}/${id}`, dto)
   }
 

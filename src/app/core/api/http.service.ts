@@ -14,32 +14,35 @@ export class HttpService {
     @Inject(API_URL) private apiUrl: string
   ) { }
 
+  public get apiVersion(): string { return 'v1'; }
+  public set apiVersion(version: string) { this.apiVersion = version; }
+
   public get<T>(url: string, options?: ApiRequestOptions): Observable<T> {
-    return this._http.get<Response<T>>(url, options).pipe(
+    return this._http.get<Response<T>>(`${this.apiUrl}/${this.apiVersion}/${url}`, options).pipe(
       map(response => this.handleResponse(response))
     );
   }
 
   public post<T>(url: string, body: unknown, options?: ApiRequestOptions): Observable<T> {
-    return this._http.post<Response<T>>(`${this.apiUrl}/${url}`, body, options).pipe(
+    return this._http.post<Response<T>>(`${this.apiUrl}/${this.apiVersion}/${url}`, body, options).pipe(
       map(response => this.handleResponse(response))
     );
   }
 
   public put<T>(url: string, body: unknown, options?: ApiRequestOptions): Observable<T> {
-    return this._http.put<Response<T>>(`${this.apiUrl}/${url}`, body, options).pipe(
+    return this._http.put<Response<T>>(`${this.apiUrl}/${this.apiVersion}/${url}`, body, options).pipe(
       map(response => this.handleResponse(response))
     );
   }
 
   public patch<T>(url: string, body: unknown, options?: ApiRequestOptions): Observable<T> {
-    return this._http.patch<Response<T>>(`${this.apiUrl}/${url}`, body, options).pipe(
+    return this._http.patch<Response<T>>(`${this.apiUrl}/${this.apiVersion}/${url}`, body, options).pipe(
       map(response => this.handleResponse(response))
     );
   }
 
   public delete<T>(url: string, options?: ApiRequestOptions): Observable<T> {
-    return this._http.delete<Response<T>>(`${this.apiUrl}/${url}`, options).pipe(
+    return this._http.delete<Response<T>>(`${this.apiUrl}/${this.apiVersion}/${url}`, options).pipe(
       map(response => this.handleResponse(response))
     );
   }

@@ -1,4 +1,4 @@
-import { CommonGetDTO, CommonPostDTO, CommonPutDTO } from "../Base/common.dto";
+import { CommonGetDTO, CommonPostDTO, CommonPutDTO } from "../base/common.dto";
 
 export interface UserGetDTO extends CommonGetDTO<string> {
   name: string;
