@@ -1,13 +1,15 @@
 import { Component, ViewChild } from "@angular/core";
+import { DrawerModule } from "primeng/drawer";
 import { FooterComponent } from "./components/footer/footer.component";
-import { RouterOutlet } from "@angular/router";
 import { HeaderComponent } from "./components/header/header.component";
 import { MenuComponent } from "./components/menu/menu.component";
+import { RouterOutlet } from "@angular/router";
 
 @Component({
   selector: 'app-base-layout',
   standalone: true,
   imports: [
+    DrawerModule,
     HeaderComponent,
     MenuComponent,
     FooterComponent,
@@ -15,7 +17,11 @@ import { MenuComponent } from "./components/menu/menu.component";
   ],
   template: `
     <app-header (toggleMenu)="onToggleMenu()"></app-header>
-    <app-menu #menu></app-menu>
+    <aside>
+      <p-drawer [(visible)]="menu.visible">
+        <app-menu #menu></app-menu>
+      </p-drawer>
+    </aside>
     <main>
       <router-outlet></router-outlet>
     </main>
@@ -25,7 +31,6 @@ import { MenuComponent } from "./components/menu/menu.component";
 export class BaseLayoutComponent {
   @ViewChild('menu')
   public menu!: MenuComponent;
-
 
   public onToggleMenu(): void {
     this.menu.visible = !this.menu.visible;
