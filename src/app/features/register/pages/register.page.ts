@@ -6,11 +6,15 @@ import { UserPostDTO } from "../../../shared/models/DTOs/users/user.dto";
 import { DateUtils } from "../../../shared/utils/date.utils";
 import { Router } from "@angular/router";
 import { ToastService } from "../../../core/services/toast.service";
+import { SvgLoaderComponent } from "../../../shared/components/svg-loader/svg-loader.component";
 
 @Component({
   standalone: true,
   templateUrl: `./register.page.html`,
-  imports: [RegisterFormComponent],
+  imports: [
+    RegisterFormComponent, 
+    SvgLoaderComponent
+  ],
 })
 export class RegisterPage {
   constructor(

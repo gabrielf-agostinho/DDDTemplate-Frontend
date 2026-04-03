@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Output } from "@angular/core";
-import { RouterModule } from "@angular/router";
+import { Router, RouterModule } from "@angular/router";
 import { ButtonModule } from "primeng/button";
 import { TooltipModule } from "primeng/tooltip";
 import { SpeedDialModule } from 'primeng/speeddial';
@@ -11,6 +11,8 @@ import { ThemeSwitcherComponent } from "../theme-switcher/theme-switcher.compone
 import { ConfirmationService, MenuItem } from "primeng/api";
 import { AuthService } from "../../../core/auth/auth.service";
 import { UserGetDTO } from "../../../shared/models/DTOs/users/user.dto";
+import { ToastService } from "../../../core/services/toast.service";
+import { SvgLoaderComponent } from "../../../shared/components/svg-loader/svg-loader.component";
 
 @Component({
   selector: 'app-header',
@@ -21,7 +23,8 @@ import { UserGetDTO } from "../../../shared/models/DTOs/users/user.dto";
     RouterModule,
     SpeedDialModule,
     ConfirmDialogModule,
-    ThemeSwitcherComponent
+    ThemeSwitcherComponent,
+    SvgLoaderComponent
   ],
   templateUrl: './header.component.html',
 })
@@ -43,7 +46,11 @@ export class HeaderComponent {
           acceptIcon: 'pi pi-power-off',
           rejectIcon: 'pi pi-undo',
           message: 'Você realmente deseja sair do sistema?',
-          accept: () => this._authService.logout(),
+          accept: () => {
+            this._authService.logout();
+            this._router.navigate(['/login']);
+            this._toastService.showSuccessToast('Logoff realizado com sucesso!');
+          }
         });
       },
     },
@@ -57,7 +64,9 @@ export class HeaderComponent {
     @Inject(SYSTEM_INFO) public systemInfo: SystemInfo,
     public themeService: ThemeService,
     private _confirmationService: ConfirmationService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _router: Router,
+    private _toastService: ToastService
   ) { }
 
   public onToggleMenu(): void {

@@ -6,7 +6,7 @@
 
   <div class="flex-1 justify-center hidden md:flex">
     <a class="flex justify-center items-center whitespace-nowrap" [routerLink]="['/']">
-      <img class="max-w-28 text-primary" [src]="themeService.isDarkMode() ? '' : '' " alt="Logo" />
+      <app-svg-loader src="images/svg/logo.svg"></app-svg-loader>
       <h1 class="text-primary ms-2 mr-10">
         | {{ systemInfo.name }}
       </h1>
