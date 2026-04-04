@@ -1,7 +1,7 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
-import { routes } from './app.routes';
+import { ROUTES } from './app.routes';
 import { providePrimeNG } from 'primeng/config';
 import { provideApiUrl } from './core/providers/apiUrl.provider';
 import { PRIMENG_CONFIG } from './core/config/primeng.config';
@@ -15,10 +15,10 @@ import { provideConfirmationService } from './core/providers/confirmationService
 
 configLocale();
 
-export const appConfig: ApplicationConfig = {
+export const APP_CONFIG: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes),
+    provideRouter(ROUTES),
     provideHttpCLient(),
     provideApiUrl(),
     provideLocale(),

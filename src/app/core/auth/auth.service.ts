@@ -31,7 +31,7 @@ export class AuthService {
       headers: new HttpHeaders({ 'refreshToken': refreshToken })
     };
 
-    return this._httpService.post<UserToken>('auth/refresh', null, options)
+    return this._httpService.patch<UserToken>('auth/refresh', null, options)
       .pipe(
         tap(token => this._sessionService.setSession(token))
       );

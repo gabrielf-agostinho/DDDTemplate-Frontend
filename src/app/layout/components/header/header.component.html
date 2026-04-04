@@ -24,7 +24,7 @@
     <p-speeddial class="topbar-speeddial" [model]="userOptions" [direction]="direction">
       <ng-template #button let-toggleCallback="toggleCallback">
         <p-button icon="pi pi-user" [text]="true" [rounded]="true" tooltipPosition="left"
-          [pTooltip]="currentUser ? currentUser.name : 'Usuário'" (onClick)="toggleCallback($event)"></p-button>
+          [pTooltip]="currentUser() ? currentUser()?.name : 'Usuário'" (onClick)="toggleCallback($event)"></p-button>
       </ng-template>
       <ng-template #item let-item let-toggleCallback="toggleCallback">
         <p-button [icon]="item.icon" [text]="true" [rounded]="true" [pTooltip]="item.label"

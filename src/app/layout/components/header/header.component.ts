@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, Output } from "@angular/core";
+import { Component, EventEmitter, Inject, Output, Signal } from "@angular/core";
 import { Router, RouterModule } from "@angular/router";
 import { ButtonModule } from "primeng/button";
 import { TooltipModule } from "primeng/tooltip";
@@ -10,9 +10,10 @@ import { ThemeService } from "../../services/theme.service";
 import { ThemeSwitcherComponent } from "../theme-switcher/theme-switcher.component";
 import { ConfirmationService, MenuItem } from "primeng/api";
 import { AuthService } from "../../../core/auth/auth.service";
-import { UserGetDTO } from "../../../shared/models/DTOs/users/user.dto";
 import { ToastService } from "../../../core/services/toast.service";
 import { SvgLoaderComponent } from "../../../shared/components/svg-loader/svg-loader.component";
+import { toSignal } from '@angular/core/rxjs-interop';
+import { UserGetDTO } from "../../../shared/models/DTOs/users/user.dto";
 
 @Component({
   selector: 'app-header',
@@ -34,7 +35,7 @@ export class HeaderComponent {
 
   public direction: 'up' | 'down' | 'left' | 'right' = 'down';
 
-  public currentUser!: UserGetDTO;
+  public currentUser: Signal<UserGetDTO | null>;
 
   public userOptions: MenuItem[] = [
     {
@@ -67,7 +68,9 @@ export class HeaderComponent {
     private _authService: AuthService,
     private _router: Router,
     private _toastService: ToastService
-  ) { }
+  ) { 
+    this.currentUser = toSignal(this._authService.currentUser<UserGetDTO>(), { initialValue: null });
+  }
 
   public onToggleMenu(): void {
     this.toggleMenu.emit();

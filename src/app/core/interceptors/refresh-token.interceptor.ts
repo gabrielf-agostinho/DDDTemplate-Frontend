@@ -9,6 +9,9 @@ export const REFRESH_TOKEN_INTERCEPTOR: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const session = inject(SessionService);
 
+  if (req.url.includes('/auth/refresh'))
+    return next(req);
+
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
       if (error.status === EResponseCodes.UNAUTHORIZED && session.token?.refreshToken) {

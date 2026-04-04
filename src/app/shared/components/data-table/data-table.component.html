@@ -1,0 +1,196 @@
+<p-table
+  #dataTable
+  [value]="rows"
+  [columns]="cols"
+  [lazy]="true"
+  [paginator]="paginate"
+  [alwaysShowPaginator]="alwaysPaginate"
+  [rows]="rowsPerPageOptions[0]"
+  [rowsPerPageOptions]="rowsPerPageOptions"
+  [totalRecords]="totalRecords"
+  [showCurrentPageReport]="showCurrentPageReport"
+  [currentPageReportTemplate]="getTotalRecords()"
+  [scrollable]="scrollable"
+  [showGridlines]="showGridLines"
+  [stripedRows]="stripedRows"
+  (onSort)="onSort($event)"
+  (onPage)="onPage($event)"
+  (onFilter)="onFilter($event)"
+>
+  <!-- CAPTION -->
+  <ng-template #caption>
+    <div class="flex flex-col md:flex-row justify-between align-items-center">
+      @if (allowNew && canInsert) {
+        <p-button
+          styleClass="md:mb-0 mb-4"
+          size="small"
+          [outlined]="themeService.isDarkMode()"
+          icon="pi pi-plus"
+          label="Novo"
+          pTooltip="Cria um novo registro"
+          [routerLink]="['novo']"
+        />
+      }
+
+      <p-button
+        size="small"
+        severity="secondary"
+        [outlined]="themeService.isDarkMode()"
+        icon="pi pi-filter-slash"
+        label="Limpar Filtros"
+        (click)="clear(dataTable)"
+      />
+    </div>
+  </ng-template>
+
+  <!-- HEADER -->
+  <ng-template #header let-columns>
+    <tr>
+      @for (col of columns; track col.field; let i = $index) {
+        <th
+          class="text-center"
+          [pSortableColumnDisabled]="actions && i === 0"
+          [pSortableColumn]="col.field"
+        >
+          @if (!actions || i > 0) {
+            <p-sortIcon [field]="col.field"></p-sortIcon>
+          }
+
+          {{ col.header }}
+
+          @if (col.options?.filter && (!actions || i > 0)) {
+            <p-columnFilter
+              display="menu"
+              [showMatchModes]="true"
+              [showOperator]="false"
+              [showAddButton]="true"
+              [type]="col.options.filter.type"
+              [field]="col.field"
+              [placeholder]="col.options.filter.placeholder ?? getDefaultFilterPlaceholder(col)"
+              [matchMode]="col.options.filter.matchMode ?? 'contains'"
+            >
+              @if (col.options.filter.type === 'boolean') {
+                <ng-template #filter let-filter="filterCallback">
+                  <div class="w-full text-center">
+                    <p-checkbox
+                      [binary]="true"
+                      [indeterminate]="true"
+                      (onChange)="filter($event.checked)"
+                    ></p-checkbox>
+                  </div>
+                </ng-template>
+              }
+
+              @if (col.options.filter.type === 'select') {
+                <ng-template #filter let-filter="filterCallback">
+                  <div class="w-full">
+                    <p-select
+                      [options]="col.options.filter.options"
+                      [showClear]="true"
+                      optionLabel="description"
+                      optionValue="id"
+                      class="w-full"
+                      appendTo="body"
+                      (onChange)="filter($event.value)"
+                    ></p-select>
+                  </div>
+                </ng-template>
+              }
+            </p-columnFilter>
+          }
+        </th>
+      }
+    </tr>
+  </ng-template>
+
+  <!-- BODY -->
+  <ng-template #body let-rowData let-columns="columns">
+    <tr>
+      @for (col of columns; track col.field; let i = $index) {
+        @if (actions && i === 0) {
+          <td>
+            <div class="flex justify-center items-center">
+              @if (isSelectable) {
+                <p-button
+                  size="small"
+                  severity="success"
+                  icon="pi pi-check"
+                  pTooltip="Selecionar"
+                  (onClick)="onSelect(rowData)"
+                />
+              }
+
+              @if (!isModal) {
+                <p-button
+                  size="small"
+                  severity="info"
+                  icon="pi pi-eye"
+                  pTooltip="Visualizar"
+                  [routerLink]="[rowData['id']]"
+                />
+              }
+
+              @if (canUpdate) {
+                <p-button
+                  size="small"
+                  severity="warn"
+                  icon="pi pi-pencil"
+                  pTooltip="Editar"
+                  [routerLink]="[rowData['id'] + '/editar']"
+                />
+              }
+
+              @if (canDelete) {
+                <p-button
+                  size="small"
+                  severity="danger"
+                  icon="pi pi-trash"
+                  pTooltip="Excluir"
+                  (onClick)="requestDelete.emit(rowData['id'])"
+                />
+              }
+
+              @for (extraAction of extraActions; track extraAction) {
+                <p-button
+                  size="small"
+                  [severity]="extraAction.severity"
+                  [icon]="extraAction.icon"
+                  [pTooltip]="extraAction.tooltip"
+                  (onClick)="extraAction.onClick(rowData)"
+                />
+              }
+            </div>
+          </td>
+        } @else {
+          <td [ngClass]="col?.options?.classes ?? ''">
+            @if (!col?.options?.value) {
+              {{ rowData[col.field] }}
+            } @else {
+              @if (col.options.value.useCheckIcon) {
+                <i [class]="getBoolIcon(rowData[col.field])"></i>
+              }
+
+              @if (col.options.value.pipe) {
+                @if (col.options.value.pipe.name === 'selectLabel') {
+                  {{ rowData[col.field] | selectLabel: col.options.filter.options }}
+                } @else {
+                  {{
+                    rowData[col.field]
+                      | dynamic: col.options.value.pipe.name : col.options.value.pipe.format
+                  }}
+                }
+              }
+            }
+          </td>
+        }
+      }
+    </tr>
+  </ng-template>
+
+  <!-- EMPTY -->
+  <ng-template #emptymessage>
+    <tr>
+      <td [colSpan]="cols.length" class="text-center">Nenhum registro encontrado.</td>
+    </tr>
+  </ng-template>
+</p-table>

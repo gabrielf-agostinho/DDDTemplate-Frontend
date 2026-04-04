@@ -1,8 +1,9 @@
 import { Routes } from '@angular/router';
 import { GUEST_GUARD } from './core/auth/guest.guard';
 import { AUTH_GUARD } from './core/auth/auth.guard';
+import { MODULE_GUARD } from './shared/guards/module.guard';
 
-export const routes: Routes = [
+export const ROUTES: Routes = [
   {
     path: 'login',
     canMatch: [GUEST_GUARD],
@@ -18,7 +19,11 @@ export const routes: Routes = [
     canMatch: [AUTH_GUARD],
     loadComponent: () => import('./layout/base-layout.component').then(m => m.BaseLayoutComponent),
     children: [
-      
+      {
+        path: 'usuarios',
+        canMatch: [MODULE_GUARD],
+        loadChildren: () => import('./features/users/users.routes').then(m => m.USER_ROUTES)
+      }
     ]
   }
 ];
