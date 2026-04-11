@@ -20,8 +20,25 @@ import { DataTableComponent } from '../../../../shared/components/data-table/dat
 })
 export class UserViewPage extends BaseViewComponent<UserGetDTO, UserPostDTO, UserPutDTO> {
   override cols: IColumn[] = [
-    { field: 'name', header: 'Nome', options: { classes: 'text-center' } },
-    { field: 'email', header: 'Email', options: { classes: 'text-center' } },
+    {
+      field: 'name',
+      header: 'Nome',
+      options: { classes: 'text-center', filter: { type: 'text' } },
+    },
+    {
+      field: 'email',
+      header: 'Email',
+      options: { classes: 'text-center', filter: { type: 'text' } },
+    },
+    {
+      field: 'isActive',
+      header: 'Ativo',
+      options: {
+        classes: 'text-center',
+        value: { useCheckIcon: true },
+        filter: { type: 'boolean' },
+      },
+    },
   ];
 
   constructor(private _usersService: UsersService) {

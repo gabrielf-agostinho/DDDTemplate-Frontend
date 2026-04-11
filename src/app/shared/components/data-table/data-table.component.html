@@ -48,7 +48,7 @@
     <tr>
       @for (col of columns; track col.field; let i = $index) {
         <th
-          class="text-center"
+          [style.text-align]="'center'"
           [pSortableColumnDisabled]="actions && i === 0"
           [pSortableColumn]="col.field"
         >
@@ -162,7 +162,7 @@
             </div>
           </td>
         } @else {
-          <td [ngClass]="col?.options?.classes ?? ''">
+          <td [ngClass]="col?.options?.classes ?? ''" [style.text-align]="getTextAlign(col)">
             @if (!col?.options?.value) {
               {{ rowData[col.field] }}
             } @else {

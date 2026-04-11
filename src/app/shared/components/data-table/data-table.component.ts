@@ -26,7 +26,7 @@ import { IColumn } from '../../interfaces/data-table/IColumn';
     TooltipModule,
     SelectModule,
     SelectLabelPipe,
-    DynamicPipe
+    DynamicPipe,
   ],
 })
 export class DataTableComponent<T> implements OnInit {
@@ -112,6 +112,16 @@ export class DataTableComponent<T> implements OnInit {
 
   ngOnInit(): void {
     if (this.actions) this.cols.unshift({ field: 'actions', header: 'Ações' });
+  }
+
+  public getTextAlign(col: IColumn): string | null {
+    const classes = col?.options?.classes ?? '';
+
+    if (classes.includes('text-center')) return 'center';
+    if (classes.includes('text-right')) return 'right';
+    if (classes.includes('text-left')) return 'left';
+
+    return null;
   }
 
   public getBoolIcon(value: boolean): string {
