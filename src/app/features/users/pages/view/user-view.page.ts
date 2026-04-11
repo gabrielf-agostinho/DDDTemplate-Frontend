@@ -36,7 +36,7 @@ export class UserViewPage extends BaseViewComponent<UserGetDTO, UserPostDTO, Use
       options: {
         classes: 'text-center',
         value: { useCheckIcon: true },
-        filter: { type: 'boolean' },
+        filter: { type: 'boolean', matchMode: 'equals' },
       },
     },
   ];
