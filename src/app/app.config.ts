@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withViewTransitions } from '@angular/router';
 
 import { ROUTES } from './app.routes';
 import { providePrimeNG } from 'primeng/config';
@@ -18,7 +18,7 @@ configLocale();
 export const APP_CONFIG: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(ROUTES),
+    provideRouter(ROUTES, withViewTransitions()),
     provideHttpCLient(),
     provideApiUrl(),
     provideLocale(),

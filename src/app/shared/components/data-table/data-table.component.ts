@@ -70,6 +70,9 @@ export class DataTableComponent<T> implements OnInit {
   public scrollable = true;
 
   @Input()
+  public scrollHeight = 'flex';
+
+  @Input()
   public canInsert = false;
 
   @Input()
@@ -125,7 +128,7 @@ export class DataTableComponent<T> implements OnInit {
   }
 
   public getBoolIcon(value: boolean): string {
-    return value ? 'pi pi-check' : 'pi pi-times';
+    return value ? 'pi pi-check text-green-500' : 'pi pi-times text-red-500';
   }
 
   public getTotalRecords(): string {

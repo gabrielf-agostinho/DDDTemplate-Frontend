@@ -1,20 +1,27 @@
-import { Component } from "@angular/core";
-import { DrawerModule } from "primeng/drawer";
-import { FooterComponent } from "./components/footer/footer.component";
-import { HeaderComponent } from "./components/header/header.component";
-import { MenuComponent } from "./components/menu/menu.component";
-import { RouterOutlet } from "@angular/router";
+import { Component } from '@angular/core';
+import { DrawerModule } from 'primeng/drawer';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-base-layout',
   standalone: true,
-  imports: [
-    DrawerModule,
-    HeaderComponent,
-    MenuComponent,
-    FooterComponent,
-    RouterOutlet
-  ],
+  imports: [DrawerModule, HeaderComponent, MenuComponent, FooterComponent, RouterOutlet],
+  styles: `
+    .route-transition {
+      view-transition-name: route-content;
+    }
+
+    ::view-transition-old(route-content) {
+      animation: fadeOut 400ms ease forwards;
+    }
+
+    ::view-transition-new(route-content) {
+      animation: fadeIn 500ms ease forwards;
+    }
+  `,
   template: `
     <app-header (toggleMenu)="onToggleMenu()"></app-header>
     <aside>
@@ -22,11 +29,15 @@ import { RouterOutlet } from "@angular/router";
         <app-menu #menu></app-menu>
       </p-drawer>
     </aside>
-    <main>
-      <router-outlet></router-outlet>
+    <main class="mt-10 px-10">
+      <div class="route-transition">
+        <router-outlet></router-outlet>
+      </div>
     </main>
-    <app-footer class="absolute bottom-4 text-center w-full text-surface-600 dark:text-surface-400"></app-footer>
-  `
+    <app-footer
+      class="absolute bottom-4 text-center w-full text-surface-600 dark:text-surface-400"
+    ></app-footer>
+  `,
 })
 export class BaseLayoutComponent {
   public menuVisible: boolean = false;
