@@ -3,25 +3,14 @@ import { DrawerModule } from 'primeng/drawer';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { MenuComponent } from './components/menu/menu.component';
-import { RouterOutlet } from '@angular/router';
+import { Data, RouterOutlet } from '@angular/router';
+import { fader } from './animations/fader.animation';
 
 @Component({
   selector: 'app-base-layout',
   standalone: true,
   imports: [DrawerModule, HeaderComponent, MenuComponent, FooterComponent, RouterOutlet],
-  styles: `
-    .route-transition {
-      view-transition-name: route-content;
-    }
-
-    ::view-transition-old(route-content) {
-      animation: fadeOut 400ms ease forwards;
-    }
-
-    ::view-transition-new(route-content) {
-      animation: fadeIn 500ms ease forwards;
-    }
-  `,
+  animations: [fader],
   template: `
     <app-header (toggleMenu)="onToggleMenu()"></app-header>
     <aside>
@@ -30,8 +19,8 @@ import { RouterOutlet } from '@angular/router';
       </p-drawer>
     </aside>
     <main class="mt-10 px-10">
-      <div class="route-transition">
-        <router-outlet></router-outlet>
+      <div [@routeAnimations]="prepareRoute(outlet)" class="relative">
+        <router-outlet #outlet=outlet></router-outlet>
       </div>
     </main>
     <app-footer
@@ -44,5 +33,9 @@ export class BaseLayoutComponent {
 
   public onToggleMenu(): void {
     this.menuVisible = !this.menuVisible;
+  }
+
+  public prepareRoute(outlet: RouterOutlet): Data {
+    return outlet && outlet.activatedRouteData;
   }
 }
