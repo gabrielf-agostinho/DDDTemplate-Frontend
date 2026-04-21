@@ -89,6 +89,15 @@ export abstract class BaseFormComponent<TGetDTO, TPostDTO, TPutDTO> implements O
     }
   }
 
+  protected setEditMode(): void {
+    this.method = EMethod.PUT;
+  }
+
+  protected cancel(): void {
+    this.patchForm(this.entity()!);
+    this.method = EMethod.GET;
+  }
+
   protected save(): void {
     this.validateForm();
 

@@ -1,0 +1,48 @@
+<div class="flex justify-between align-middle">
+  <div>
+    <p-button
+      [text]="true"
+      [outlined]="true"
+      [rounded]="true"
+      icon="pi pi-arrow-left"
+      pTooltip="Voltar"
+      (onClick)="goBack()"
+    ></p-button>
+  </div>
+  @if (isViewMode() && !isNewMode() && canSave) {
+    <div>
+      <p-button
+        [text]="true"
+        [outlined]="true"
+        [rounded]="true"
+        icon="pi pi-pencil"
+        label="Editar"
+        (onClick)="setAsEditMode.emit()"
+      ></p-button>
+    </div>
+  }
+  @if ((isNewMode() || isEditMode()) && canSave) {
+    <div class="flex">
+      @if (isEditMode()) {
+        <div>
+          <p-button
+            [text]="true"
+            [outlined]="true"
+            [rounded]="true"
+            icon="pi pi-undo"
+            label="Cancelar"
+            (onClick)="onCancel.emit()"
+          ></p-button>
+        </div>
+      }
+      <p-button
+        [text]="true"
+        [outlined]="true"
+        [rounded]="true"
+        icon="pi pi-save"
+        label="Salvar"
+        (onClick)="onSave.emit()"
+      ></p-button>
+    </div>
+  }
+</div>
