@@ -7,6 +7,7 @@ import { EMethod } from '../../enums/method.enum';
 import { EModule } from '../../enums/module.enum';
 import { first } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormField } from '../../forms/FormField.type';
 
 @Component({
   standalone: true,
@@ -24,6 +25,7 @@ export abstract class BaseFormComponent<TGetDTO, TPostDTO, TPutDTO> implements O
   protected loading = signal(false);
   protected entity = signal<TGetDTO | null>(null);
   protected canSave = signal(false);
+  protected fields!: Record<string, FormField<unknown>>;
 
   protected id?: string;
   protected method: EMethod = this.routeSnapshot.data?.['method'] as EMethod;

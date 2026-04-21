@@ -1,0 +1,67 @@
+<form [formGroup]="form" class="mt-3 grid p-fluid">
+  @for (field of fieldList; track field.id) {
+    <div [class]="'col-' + (field.col || 12)">
+      @switch (resolveType(field)) {
+        @case ('text') {
+          <p-iftalabel>
+            <input
+              [readOnly]="readonly()"
+              pInputText
+              [id]="field.id"
+              type="text"
+              [formControlName]="field.id"
+              [placeholder]="field.placeholder"
+              class="w-full"
+            />
+            <label [for]="field.id">{{ field.label }}</label>
+          </p-iftalabel>
+        }
+
+        @case ('email') {
+          <p-iftalabel>
+            <input
+              [readOnly]="readonly()"
+              pInputText
+              [id]="field.id"
+              type="email"
+              [formControlName]="field.id"
+              [placeholder]="field.placeholder"
+              class="w-full"
+            />
+            <label [for]="field.id">{{ field.label }}</label>
+          </p-iftalabel>
+        }
+
+        @case ('password') {
+          <p-iftalabel>
+            <p-password
+              [inputId]="field.id"
+              [formControlName]="field.id"
+              [placeholder]="field.placeholder"
+              [feedback]="false"
+              [toggleMask]="true"
+              styleClass="w-full"
+            ></p-password>
+            <label [for]="field.id">{{ field.label }}</label>
+          </p-iftalabel>
+        }
+
+        @case ('checkbox') {
+          <div class="flex align-items-center gap-2 mt-3">
+            <p-checkbox
+              [readonly]="readonly()"
+              [inputId]="field.id"
+              [formControlName]="field.id"
+              binary="true"
+            ></p-checkbox>
+            <label [for]="field.id">{{ field.label }}</label>
+          </div>
+        }
+      }
+
+      @if (form.get(field.id)?.invalid && form.get(field.id)?.touched) {
+        <small class="p-error block mt-1"> Campo inválido </small>
+      }
+    </div>
+  }
+</form>

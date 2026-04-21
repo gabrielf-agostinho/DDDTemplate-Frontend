@@ -1,9 +1,12 @@
 import { ValidatorFn } from "@angular/forms";
 
+export type FieldType = 'text' | 'email' | 'password' | 'checkbox';
+
 export type FormField<T> = {
-  id?: string;
+  id?: any;
   validators?: ValidatorFn[];
   label?: string;
-  type?: string;
   placeholder?: string;
+  type?: FieldType;
+  col?: number;
 };
