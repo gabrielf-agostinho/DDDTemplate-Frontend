@@ -12,7 +12,9 @@ import { fader } from './animations/fader.animation';
   imports: [DrawerModule, HeaderComponent, MenuComponent, FooterComponent, RouterOutlet],
   animations: [fader],
   template: `
-    <app-header (toggleMenu)="onToggleMenu()"></app-header>
+    <nav class="p-5">
+      <app-header (toggleMenu)="onToggleMenu()"></app-header>
+    </nav>
     <aside>
       <p-drawer [(visible)]="menuVisible">
         <app-menu #menu></app-menu>
@@ -20,7 +22,7 @@ import { fader } from './animations/fader.animation';
     </aside>
     <main class="mt-10 px-10">
       <div [@routeAnimations]="prepareRoute(outlet)" class="relative">
-        <router-outlet #outlet=outlet></router-outlet>
+        <router-outlet #outlet="outlet"></router-outlet>
       </div>
     </main>
     <app-footer
