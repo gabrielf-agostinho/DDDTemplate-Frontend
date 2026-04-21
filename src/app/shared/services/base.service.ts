@@ -20,8 +20,6 @@ export abstract class BaseService<TGetDTO, TPostDTO, TPutDTO> {
   ): Observable<Pagination<TGetDTO>> {
     const params = [...queryParams];
 
-    console.log(sort);
-
     params.push({ key: 'skip', value: skip });
     params.push({ key: 'take', value: take });
     params.push({ key: 'order_by_field', value: sort?.field });

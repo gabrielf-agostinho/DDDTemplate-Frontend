@@ -1,30 +1,30 @@
-import { Routes } from "@angular/router";
-import { ACTION_GUARD } from "../../shared/guards/action.guard";
-import { EMethod } from "../../shared/enums/method.enum";
+import { Routes } from '@angular/router';
+import { ACTION_GUARD } from '../../shared/guards/action.guard';
+import { EMethod } from '../../shared/enums/method.enum';
 
 export const USER_ROUTES: Routes = [
   {
     path: '',
-    data: { method: EMethod.GET },
+    data: { breadcrumb: 'Lista de Usuários', method: EMethod.GET },
     canActivate: [ACTION_GUARD],
-    loadComponent: () => import('./pages/view/user-view.page').then(p => p.UserViewPage)
+    loadComponent: () => import('./pages/view/user-view.page').then((p) => p.UserViewPage),
   },
   {
     path: 'novo',
-    data: { method: EMethod.POST },
+    data: { breadcrumb: 'Novo Usuário', method: EMethod.POST },
     canActivate: [ACTION_GUARD],
-    loadComponent: () => import('./pages/form/user-form.page').then(p => p.UserFormPage)
+    loadComponent: () => import('./pages/form/user-form.page').then((p) => p.UserFormPage),
   },
   {
     path: ':id',
-    data: { method: EMethod.GET },
+    data: { breadcrumb: 'Detalhes do Usuário', method: EMethod.GET },
     canActivate: [ACTION_GUARD],
-    loadComponent: () => import('./pages/form/user-form.page').then(p => p.UserFormPage)
+    loadComponent: () => import('./pages/form/user-form.page').then((p) => p.UserFormPage),
   },
   {
     path: ':id/editar',
-    data: { method: EMethod.PUT },
+    data: { breadcrumb: 'Editar Usuário', method: EMethod.PUT },
     canActivate: [ACTION_GUARD],
-    loadComponent: () => import('./pages/form/user-form.page').then(p => p.UserFormPage)
-  }
+    loadComponent: () => import('./pages/form/user-form.page').then((p) => p.UserFormPage),
+  },
 ];

@@ -24,7 +24,7 @@ export const ROUTES: Routes = [
     children: [
       {
         path: 'usuarios',
-        data: { module: EModule.USERS },
+        data: { breadcrumb: 'Usuários', module: EModule.USERS },
         canMatch: [MODULE_GUARD],
         loadChildren: () => import('./features/users/users.routes').then((m) => m.USER_ROUTES),
       },
