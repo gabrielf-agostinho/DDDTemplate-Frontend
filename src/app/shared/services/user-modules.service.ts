@@ -5,6 +5,7 @@ import { ModuleGetDTO } from "../models/DTOs/modules/module.dto";
 import { BaseService } from "./base.service";
 import { UserModulesGetDTO, UserModulesPostDTO, UserModulesPutDTO } from "../models/DTOs/userModules/userModules.dto";
 import { EModule } from "../enums/module.enum";
+import { EMethod } from "../enums/method.enum";
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +23,9 @@ export class UserModulesService extends BaseService<UserModulesGetDTO, UserModul
 
   public hasModuleAccess(module: EModule): Observable<boolean> {
     return this._httpService.get<boolean>(`${this.module}/has-module-access/${module}`);
+  }
+
+  public hasModuleAccessWithMethod(module: EModule, method: EMethod): Observable<boolean> {
+    return this._httpService.get<boolean>(`${this.module}/has-module-access/${module}/${method}`);
   }
 }

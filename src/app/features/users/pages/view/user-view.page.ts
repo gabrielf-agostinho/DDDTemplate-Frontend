@@ -10,10 +10,14 @@ import { DataTableComponent } from '../../../../shared/components/data-table/dat
   standalone: true,
   template: `
     <app-data-table
+      [canInsert]="canInsert()"
+      [canUpdate]="canUpdate()"
+      [canDelete]="canDelete()"
       [rows]="items()"
       [totalRecords]="items().length"
       [cols]="cols"
       (requestSearch)="search($event.filter, $event.skip, $event.take, $event.sort)"
+      (requestDelete)="onDelete($event)"
     ></app-data-table>
   `,
   imports: [DataTableComponent],

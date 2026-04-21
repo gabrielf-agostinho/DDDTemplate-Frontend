@@ -88,7 +88,7 @@ export class DataTableComponent<T> implements OnInit {
   public isSelectable = false;
 
   @Output()
-  public requestDelete: EventEmitter<number> = new EventEmitter<number>();
+  public requestDelete: EventEmitter<T> = new EventEmitter<T>();
 
   @Output()
   public selected: EventEmitter<T> = new EventEmitter<T>();
