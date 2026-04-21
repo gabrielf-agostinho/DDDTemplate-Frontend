@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { ModuleGetDTO } from "../models/DTOs/modules/module.dto";
 import { BaseService } from "./base.service";
 import { UserModulesGetDTO, UserModulesPostDTO, UserModulesPutDTO } from "../models/DTOs/userModules/userModules.dto";
+import { EModule } from "../enums/module.enum";
 
 @Injectable({
   providedIn: 'root'
@@ -17,5 +18,9 @@ export class UserModulesService extends BaseService<UserModulesGetDTO, UserModul
 
   public getByCurrentUser(): Observable<ModuleGetDTO[]> {
     return this._httpService.get<ModuleGetDTO[]>(`${this.module}/get-by-current-user`);
+  }
+
+  public hasModuleAccess(module: EModule): Observable<boolean> {
+    return this._httpService.get<boolean>(`${this.module}/has-module-access/${module}`);
   }
 }
